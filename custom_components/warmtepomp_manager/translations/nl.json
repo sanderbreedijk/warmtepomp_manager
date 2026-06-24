@@ -1,0 +1,286 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Warmtepomp Manager",
+        "description": "Stel de Warmtepomp Manager in. Datums mogen als dd-mm-jjjj of jjjj-mm-dd worden ingevoerd; de weergave wordt dd-mm-jjjj.",
+        "data": {
+          "strategy": "Strategie",
+          "switch_date": "Omschakeldatum naar PV-strategie",
+          "auto_execute": "Automatisch uitvoeren",
+          "tariff_sensor": "Huidige stroomprijs-sensor",
+          "dhw_temp_sensor": "Tapwatertemperatuur-sensor",
+          "water_heater": "Water heater entiteit",
+          "water_heater_comfort_mode": "Comfort-modus naam",
+          "dhw_onetime_switch": "Eenmalig boiler laden switch",
+          "dhw_max_temp": "Maximale tapwatertemperatuur number-entiteit",
+          "net_surplus_sensor": "Netto overschot sensor",
+          "low_price_threshold": "Lage prijs drempel €/kWh",
+          "pv_surplus_threshold": "PV-overschot drempel W",
+          "dhw_min_temp": "Tapwater minimumtemperatuur °C",
+          "dhw_target_temp": "Tapwater doeltemperatuur °C",
+          "cooldown_hours": "Cooldown tussen acties in uren",
+          "max_onetime_per_day": "Maximaal aantal boilerladingen per dag",
+          "execute_set_max_temp": "Max tapwatertemperatuur instellen bij uitvoeren",
+          "execute_water_heater_mode": "Water heater-modus instellen bij uitvoeren",
+          "net_production_sensor": "Energieproductie sensor",
+          "net_consumption_l1_sensor": "Energieverbruik fase L1 sensor",
+          "net_consumption_l2_sensor": "Energieverbruik fase L2 sensor",
+          "net_consumption_l3_sensor": "Energieverbruik fase L3 sensor",
+          "total_energy_sensor": "Totaal opgewekte energie sensor",
+          "meter_total_sensor": "Totaal elektrisch verbruik sensor",
+          "compressor_runtime_hours_sensor": "Compressor draaiuren sensor",
+          "compressor_starts_sensor": "Compressor starts sensor",
+          "hp_power_sensor": "Warmtepomp vermogenssensor",
+          "dhw_active_sensor": "Tapwater actief sensor",
+          "heating_active_sensor": "Verwarming actief sensor",
+          "cooling_active_sensor": "Koelbedrijf sensor",
+          "hp_operating_state_sensor": "Warmtepomp bedrijfstoestand sensor",
+          "standby_power_w": "Stand-by grens in W",
+          "active_power_w": "Actief grens in W",
+          "forecast_solar_today_sensor": "Forecast.Solar vandaag sensor",
+          "forecast_solar_tomorrow_sensor": "Forecast.Solar morgen sensor",
+          "weather_entity": "Weer-entiteit",
+          "indoor_temp_sensor": "Binnentemperatuur-sensor",
+          "comfort_temp": "Comforttemperatuur",
+          "negative_price_strategy": "Negatieve-prijsstrategie",
+          "pv_limit_control_mode_select": "Zonnepanelen Limit Control Mode select-entiteit",
+          "awning_mode": "Zonnescherm modus",
+          "awning_cover": "Zonnescherm cover-entiteit",
+          "awning_pv_power_sensor": "Zonnescherm PV vermogenssensor",
+          "awning_pv_close_w": "Zonnescherm omlaag vanaf PV W",
+          "awning_pv_timeout_min": "Zonnescherm vertraging minuten",
+          "awning_active_months": "Zonnescherm actieve maanden",
+          "wind_speed_sensor": "Windsnelheid sensor",
+          "rain_sensor": "Regen sensor",
+          "awning_max_wind": "Maximale wind voor zonnescherm",
+          "awning_min_indoor_temp": "Minimale binnentemperatuur",
+          "awning_start_hour": "Startuur zonnescherm",
+          "awning_end_hour": "Einduur zonnescherm"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Warmtepomp Manager opties",
+        "description": "Pas de strategie, entiteiten en veiligheidsgrenzen aan.",
+        "data": {
+          "strategy": "Strategie",
+          "switch_date": "Omschakeldatum naar PV-strategie",
+          "auto_execute": "Automatisch uitvoeren",
+          "tariff_sensor": "Huidige stroomprijs-sensor",
+          "dhw_temp_sensor": "Tapwatertemperatuur-sensor",
+          "water_heater": "Water heater entiteit",
+          "water_heater_comfort_mode": "Comfort-modus naam",
+          "dhw_onetime_switch": "Eenmalig boiler laden switch",
+          "dhw_max_temp": "Maximale tapwatertemperatuur number-entiteit",
+          "net_surplus_sensor": "Netto overschot sensor",
+          "low_price_threshold": "Lage prijs drempel €/kWh",
+          "pv_surplus_threshold": "PV-overschot drempel W",
+          "dhw_min_temp": "Tapwater minimumtemperatuur °C",
+          "dhw_target_temp": "Tapwater doeltemperatuur °C",
+          "cooldown_hours": "Cooldown tussen acties in uren",
+          "max_onetime_per_day": "Maximaal aantal boilerladingen per dag",
+          "execute_set_max_temp": "Max tapwatertemperatuur instellen bij uitvoeren",
+          "execute_water_heater_mode": "Water heater-modus instellen bij uitvoeren",
+          "net_production_sensor": "Energieproductie sensor",
+          "net_consumption_l1_sensor": "Energieverbruik fase L1 sensor",
+          "net_consumption_l2_sensor": "Energieverbruik fase L2 sensor",
+          "net_consumption_l3_sensor": "Energieverbruik fase L3 sensor",
+          "total_energy_sensor": "Totaal opgewekte energie sensor",
+          "meter_total_sensor": "Totaal elektrisch verbruik sensor",
+          "compressor_runtime_hours_sensor": "Compressor draaiuren sensor",
+          "compressor_starts_sensor": "Compressor starts sensor",
+          "hp_power_sensor": "Warmtepomp vermogenssensor",
+          "dhw_active_sensor": "Tapwater actief sensor",
+          "heating_active_sensor": "Verwarming actief sensor",
+          "cooling_active_sensor": "Koelbedrijf sensor",
+          "hp_operating_state_sensor": "Warmtepomp bedrijfstoestand sensor",
+          "standby_power_w": "Stand-by grens in W",
+          "active_power_w": "Actief grens in W",
+          "forecast_solar_today_sensor": "Forecast.Solar vandaag sensor",
+          "forecast_solar_tomorrow_sensor": "Forecast.Solar morgen sensor",
+          "weather_entity": "Weer-entiteit",
+          "indoor_temp_sensor": "Binnentemperatuur-sensor",
+          "comfort_temp": "Comforttemperatuur",
+          "negative_price_strategy": "Negatieve-prijsstrategie",
+          "pv_limit_control_mode_select": "Zonnepanelen Limit Control Mode select-entiteit",
+          "awning_mode": "Zonnescherm modus",
+          "awning_cover": "Zonnescherm cover-entiteit",
+          "awning_pv_power_sensor": "Zonnescherm PV vermogenssensor",
+          "awning_pv_close_w": "Zonnescherm omlaag vanaf PV W",
+          "awning_pv_timeout_min": "Zonnescherm vertraging minuten",
+          "awning_active_months": "Zonnescherm actieve maanden",
+          "wind_speed_sensor": "Windsnelheid sensor",
+          "rain_sensor": "Regen sensor",
+          "awning_max_wind": "Maximale wind voor zonnescherm",
+          "awning_min_indoor_temp": "Minimale binnentemperatuur",
+          "awning_start_hour": "Startuur zonnescherm",
+          "awning_end_hour": "Einduur zonnescherm"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "strategie": {
+        "name": "Strategie"
+      },
+      "advies": {
+        "name": "Advies"
+      },
+      "actie": {
+        "name": "Actie"
+      },
+      "status": {
+        "name": "Status"
+      },
+      "auto_status": {
+        "name": "Automatische uitvoering"
+      },
+      "omschakeldatum": {
+        "name": "Omschakeldatum"
+      },
+      "laatste_beslissing": {
+        "name": "Laatste beslissing"
+      },
+      "tarief": {
+        "name": "Stroomprijs"
+      },
+      "tapwater": {
+        "name": "Tapwater"
+      },
+      "netto_overschot": {
+        "name": "Netto overschot"
+      },
+      "uitvoeringen_vandaag": {
+        "name": "Uitvoeringen vandaag"
+      },
+      "tariefgroep": {
+        "name": "Tariefgroep"
+      },
+      "live_cop": {
+        "name": "Live COP"
+      },
+      "scop": {
+        "name": "SCOP"
+      },
+      "cyclustijd": {
+        "name": "Cyclustijd"
+      },
+      "starts_per_dag": {
+        "name": "Starts per dag"
+      },
+      "wp_status": {
+        "name": "Warmtepomp status"
+      },
+      "wp_vermogen": {
+        "name": "Warmtepomp vermogen"
+      },
+      "dhw_max_display": {
+        "name": "Tapwater max"
+      },
+      "forecast_solar_today": {
+        "name": "Zonneverwachting vandaag"
+      },
+      "forecast_solar_tomorrow": {
+        "name": "Zonneverwachting morgen"
+      },
+      "binnentemperatuur": {
+        "name": "Binnentemperatuur"
+      },
+      "stroomprijs": {
+        "name": "Stroomprijs"
+      },
+      "negatieve_prijzen_actief": {
+        "name": "Negatieve prijzen actief"
+      },
+      "negatieve_prijzen_morgen": {
+        "name": "Negatieve prijzen morgen"
+      },
+      "negatieve_uren_morgen": {
+        "name": "Negatieve uren morgen"
+      },
+      "laagste_prijs_morgen": {
+        "name": "Laagste prijs morgen"
+      },
+      "pv_mode": {
+        "name": "PV modus"
+      },
+      "goedkoopste_blok_morgen": {
+        "name": "Goedkoopste blok morgen"
+      },
+      "goedkoopste_blok_prijs_morgen": {
+        "name": "Goedkoopste blokprijs morgen"
+      },
+      "systeemgezondheid": {
+        "name": "Systeemgezondheid"
+      },
+      "ontbrekende_entiteiten": {
+        "name": "Ontbrekende entiteiten"
+      },
+      "dagrapport_status": {
+        "name": "Dagrapport status"
+      },
+      "ai_strategie": {
+        "name": "AI strategie"
+      },
+      "planning_status": {
+        "name": "Planningstatus"
+      },
+      "dagplanning": {
+        "name": "Dagplanning"
+      },
+      "geplande_actie": {
+        "name": "Geplande actie"
+      },
+      "verwachte_besparing": {
+        "name": "Verwachte besparing"
+      },
+      "goedkoopste_2u_blok_morgen": {
+        "name": "Goedkoopste 2-uursblok morgen"
+      },
+      "goedkoopste_4u_blok_morgen": {
+        "name": "Goedkoopste 4-uursblok morgen"
+      },
+      "tapwater_laadstrategie": {
+        "name": "Tapwater laadstrategie"
+      },
+      "legionella_dag": {
+        "name": "Legionella dag"
+      },
+      "legionella_advies": {
+        "name": "Legionella advies"
+      },
+      "vandaag_vs_gisteren": {
+        "name": "Vandaag vs gisteren"
+      },
+      "gemiddelde_prijs_vandaag": {
+        "name": "Gemiddelde prijs vandaag"
+      },
+      "gemiddelde_prijs_morgen": {
+        "name": "Gemiddelde prijs morgen"
+      },
+      "zonnescherm_pv_vermogen": {
+        "name": "Zonnescherm PV vermogen"
+      }
+    },
+    "switch": {
+      "automatisch_uitvoeren": {
+        "name": "Automatisch uitvoeren"
+      }
+    },
+    "button": {
+      "actie_nu": {
+        "name": "Voer advies nu uit"
+      }
+    },
+    "select": {
+      "uitvoeringsmodus": {
+        "name": "Uitvoeringsmodus"
+      }
+    }
+  }
+}

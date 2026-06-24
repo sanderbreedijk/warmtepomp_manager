@@ -1,0 +1,12 @@
+{
+  "name": "Warmtepomp Manager",
+  "content_in_root": false,
+  "render_readme": true,
+  "domains": [
+    "sensor",
+    "switch",
+    "button",
+    "select"
+  ],
+  "homeassistant": "2024.6.0"
+}

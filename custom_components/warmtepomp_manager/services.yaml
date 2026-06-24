@@ -1,0 +1,42 @@
+execute_advice:
+  name: Voer advies uit
+  description: Voert de huidige voorgestelde actie van de Warmtepomp Manager éénmalig uit.
+
+send_daily_report:
+  name: Verstuur dagrapport
+  description: Verstuur direct het Warmtepomp Manager dagrapport naar de ingestelde notify-service.
+
+refresh:
+  name: Vernieuw data
+  description: Forceert direct een herberekening van advies, planning, prijs, PV en systeemstatus.
+
+set_execution_mode:
+  name: Stel uitvoeringsmodus in
+  description: Zet Warmtepomp Manager op alleen advies of automatisch uitvoeren.
+  fields:
+    mode:
+      name: Modus
+      description: Kies advice voor alleen advies of auto voor automatisch uitvoeren.
+      required: true
+      example: advice
+      selector:
+        select:
+          options:
+            - advice
+            - auto
+
+set_awning_mode:
+  name: Stel zonneschermmodus in
+  description: Zet de zonneschermregeling op uit, alleen advies of automatisch.
+  fields:
+    mode:
+      name: Modus
+      description: Kies off, advice of auto.
+      required: true
+      example: auto
+      selector:
+        select:
+          options:
+            - off
+            - advice
+            - auto
