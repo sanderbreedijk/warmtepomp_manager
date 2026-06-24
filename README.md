@@ -1,4 +1,12 @@
-# Warmtepomp Manager v1.7.0
+# Warmtepomp Manager
+
+## v1.7.2
+
+- Dure stroom is nu opgesplitst in vandaag en morgen.
+- Nieuwe sensoren: `sensor.warmtepomp_manager_dure_uren_vandaag` en `sensor.warmtepomp_manager_dure_uren_morgen`.
+- Alias-sensoren toegevoegd: `sensor.warmtepomp_manager_dure_stroom_vandaag` en `sensor.warmtepomp_manager_dure_stroom_morgen`.
+- Dashboard toont nu dure prijsblokken voor vandaag én morgen.
+ v1.7.1
 
 HACS-integratie voor boiler, energie, zonnescherm en vaatwasser.
 
@@ -39,3 +47,9 @@ Instellingen → Apparaten & diensten → Warmtepomp Manager → Opties
 ## Dashboard
 
 Gebruik het YAML-dashboard in de map `dashboards/` als basis. Voor telefoon/tablet is de portrait-kaart het meest geschikt.
+
+
+## v1.7.1
+
+- Fix: toegevoegd `sensor.warmtepomp_manager_dure_uren_morgen`.
+- Dashboard verwijst niet meer naar de niet-bestaande `sensor.warmtepomp_manager_dure_stroom_morgen`.

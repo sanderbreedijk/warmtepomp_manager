@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 DOMAIN = "warmtepomp_manager"
-VERSION = "1.7.0"
+VERSION = "1.7.2"
 
 from homeassistant.const import Platform
 

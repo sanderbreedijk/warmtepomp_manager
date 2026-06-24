@@ -81,7 +81,11 @@ SENSORS: list[WpSensorDescription] = [
     WpSensorDescription(key="vaatwasser_beste_blok", name="Vaatwasser beste blok", translation_key="vaatwasser_beste_blok", icon="mdi:clock-check-outline", value_fn=lambda d: d.get("dishwasher_best_block")),
     WpSensorDescription(key="vaatwasser_besparing", name="Vaatwasser besparing", translation_key="vaatwasser_besparing", native_unit_of_measurement="€", icon="mdi:cash-plus", value_fn=lambda d: d.get("dishwasher_savings")),
     WpSensorDescription(key="dure_stroom", name="Dure stroom", translation_key="dure_stroom", icon="mdi:transmission-tower-alert", value_fn=lambda d: d.get("high_price_status")),
-    WpSensorDescription(key="dure_stroom_blokken", name="Dure stroom blokken", translation_key="dure_stroom_blokken", icon="mdi:clock-alert-outline", value_fn=lambda d: d.get("high_price_blocks")),
+    WpSensorDescription(key="dure_stroom_blokken", name="Dure stroom blokken", translation_key="dure_stroom_blokken", icon="mdi:clock-alert-outline", value_fn=lambda d: d.get("high_price_blocks") or "Geen"),
+    WpSensorDescription(key="dure_uren_vandaag", name="Dure uren vandaag", translation_key="dure_uren_vandaag", icon="mdi:clock-alert-outline", value_fn=lambda d: d.get("high_price_blocks_today") or "Geen"),
+    WpSensorDescription(key="dure_uren_morgen", name="Dure uren morgen", translation_key="dure_uren_morgen", icon="mdi:clock-alert-outline", value_fn=lambda d: d.get("high_price_blocks_tomorrow") or "Geen"),
+    WpSensorDescription(key="dure_stroom_vandaag", name="Dure stroom vandaag", translation_key="dure_stroom_vandaag", icon="mdi:transmission-tower-alert", value_fn=lambda d: d.get("high_price_blocks_today") or "Geen"),
+    WpSensorDescription(key="dure_stroom_morgen", name="Dure stroom morgen", translation_key="dure_stroom_morgen", icon="mdi:transmission-tower-alert", value_fn=lambda d: d.get("high_price_blocks_tomorrow") or "Geen"),
 ]
 
 
@@ -198,5 +202,9 @@ class WarmtepompManagerSensor(WarmtepompManagerEntity, SensorEntity):
             "vaatwasser_actie_status": data.get("dishwasher_action_status"),
             "dure_stroom_drempel": data.get("high_price_threshold"),
             "dure_stroom_blokken": data.get("high_price_blocks"),
+            "dure_uren_vandaag": data.get("high_price_blocks_today"),
+            "dure_uren_morgen": data.get("high_price_blocks_tomorrow"),
+            "dure_stroom_vandaag": data.get("high_price_blocks_today"),
+            "dure_stroom_morgen": data.get("high_price_blocks_tomorrow"),
             "dure_stroom_melding_status": data.get("high_price_notify_status"),
         }

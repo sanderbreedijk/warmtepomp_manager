@@ -1,4 +1,17 @@
+
+## v1.7.2
+
+- Fix: `sensor.warmtepomp_manager_dure_stroom_morgen` bestaat nu als alias.
+- Nieuw: `sensor.warmtepomp_manager_dure_uren_vandaag`.
+- Dure-prijsblokken worden nu gescheiden voor vandaag en morgen.
+- Dashboard bijgewerkt zodat bij stroom zowel vandaag als morgen wordt vermeld.
+
 # Changelog
+
+## 1.7.1
+
+- Fix: `sensor.warmtepomp_manager_dure_uren_morgen` toegevoegd.
+- Dashboardreferenties naar `dure_stroom_morgen` opgeschoond.
 
 ## 1.7.0
 

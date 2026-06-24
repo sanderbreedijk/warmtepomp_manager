@@ -751,12 +751,10 @@ def _best_dishwasher_plan(hass: HomeAssistant, cfg: dict[str, Any]) -> dict[str,
     }
 
 
-def _high_price_blocks(hass: HomeAssistant, cfg: dict[str, Any]) -> dict[str, Any]:
-    threshold = _as_float(cfg.get(CONF_HIGH_PRICE_THRESHOLD), 0.40)
-    items = _future_price_items(hass, cfg.get(CONF_TARIFF_SENSOR), hours=30)
-    high = [(dt, price) for dt, price in items if price >= threshold]
+def _format_price_blocks(high: list[tuple[datetime, float]]) -> str:
+    """Format consecutive high-price hours as compact time blocks."""
     if not high:
-        return {"status": "Nee", "blocks": "—", "message": ""}
+        return "—"
     blocks: list[str] = []
     start = prev = high[0][0]
     prices = [high[0][1]]
@@ -765,13 +763,54 @@ def _high_price_blocks(hass: HomeAssistant, cfg: dict[str, Any]) -> dict[str, An
             prev = dt
             prices.append(price)
         else:
-            if len(prices) >= 1:
-                blocks.append(f"{start.strftime('%H:%M')}-{(prev+timedelta(hours=1)).strftime('%H:%M')} €{min(prices):.2f}-€{max(prices):.2f}")
+            blocks.append(
+                f"{start.strftime('%H:%M')}-{(prev + timedelta(hours=1)).strftime('%H:%M')} "
+                f"€{min(prices):.2f}-€{max(prices):.2f}"
+            )
             start = prev = dt
             prices = [price]
-    blocks.append(f"{start.strftime('%H:%M')}-{(prev+timedelta(hours=1)).strftime('%H:%M')} €{min(prices):.2f}-€{max(prices):.2f}")
-    short = "; ".join(blocks[:3])
-    return {"status": "Ja", "blocks": short, "message": f"⚠️ Dure stroom: {short}"}
+    blocks.append(
+        f"{start.strftime('%H:%M')}-{(prev + timedelta(hours=1)).strftime('%H:%M')} "
+        f"€{min(prices):.2f}-€{max(prices):.2f}"
+    )
+    return "; ".join(blocks[:3])
+
+
+def _high_price_blocks(hass: HomeAssistant, cfg: dict[str, Any]) -> dict[str, Any]:
+    """Return high-price blocks split into today and tomorrow."""
+    threshold = _as_float(cfg.get(CONF_HIGH_PRICE_THRESHOLD), 0.40)
+    items = _future_price_items(hass, cfg.get(CONF_TARIFF_SENSOR), hours=36)
+    today = dt_util.now().date()
+    tomorrow = today + timedelta(days=1)
+
+    high_today = [(dt, price) for dt, price in items if dt.date() == today and price >= threshold]
+    high_tomorrow = [(dt, price) for dt, price in items if dt.date() == tomorrow and price >= threshold]
+    high_all = [(dt, price) for dt, price in items if price >= threshold]
+
+    today_blocks = _format_price_blocks(high_today)
+    tomorrow_blocks = _format_price_blocks(high_tomorrow)
+    all_blocks = _format_price_blocks(high_all)
+
+    status_today = "Ja" if high_today else "Nee"
+    status_tomorrow = "Ja" if high_tomorrow else "Nee"
+    status = "Ja" if high_all else "Nee"
+
+    message_parts = []
+    if high_today:
+        message_parts.append(f"Vandaag: {today_blocks}")
+    if high_tomorrow:
+        message_parts.append(f"Morgen: {tomorrow_blocks}")
+    message = f"⚠️ Dure stroom: {' · '.join(message_parts)}" if message_parts else ""
+
+    return {
+        "status": status,
+        "status_today": status_today,
+        "status_tomorrow": status_tomorrow,
+        "blocks": all_blocks,
+        "blocks_today": today_blocks,
+        "blocks_tomorrow": tomorrow_blocks,
+        "message": message,
+    }
 
 
 class WarmtepompManagerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -891,7 +930,11 @@ class WarmtepompManagerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self._price_alert_sent_key = key
         return {
             "high_price_status": info.get("status"),
+            "high_price_status_today": info.get("status_today"),
+            "high_price_status_tomorrow": info.get("status_tomorrow"),
             "high_price_blocks": info.get("blocks"),
+            "high_price_blocks_today": info.get("blocks_today"),
+            "high_price_blocks_tomorrow": info.get("blocks_tomorrow"),
             "high_price_threshold": _as_float(cfg.get(CONF_HIGH_PRICE_THRESHOLD), 0.40),
             "high_price_notify_status": notify_status,
         }
