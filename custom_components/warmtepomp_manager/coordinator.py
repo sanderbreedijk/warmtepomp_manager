@@ -919,6 +919,16 @@ class WarmtepompManagerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             return {"dishwasher_status": "Uit", "dishwasher_message": "", "dishwasher_last_notify": None}
 
         if door_open:
+            notify_status = "Niet verstuurd"
+            # Only notify once when the door transitions to open. This avoids a
+            # notification every coordinator refresh while the door remains open.
+            if self._dishwasher_last_door_open is not True:
+                notify_status = await self._send_notify(
+                    cfg.get(CONF_NOTIFY_DISHWASHER) or cfg.get(CONF_NOTIFY_SERVICE),
+                    "Vaatwasser",
+                    "Deur open · planning verwijderd",
+                )
+                self._dishwasher_last_notify_key = f"door_open|{now.isoformat()}"
             self._dishwasher_last_door_open = True
             self._dishwasher_plan_key = None
             return {
@@ -926,8 +936,12 @@ class WarmtepompManagerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 "dishwasher_door": "open",
                 "dishwasher_remote_start": remote_ok,
                 "dishwasher_message": "Deur open; planning gereset",
+                "dishwasher_action_status": notify_status,
                 "dishwasher_last_notify": self._dishwasher_last_notify_key,
             }
+
+        closed_after_open = self._dishwasher_last_door_open is True
+        self._dishwasher_last_door_open = False
 
         plan = _best_dishwasher_plan(self.hass, cfg)
         plan_key = f"{now.date().isoformat()}|{plan.get('best_block')}|{plan.get('best_cost')}|{automatic}"
@@ -951,6 +965,21 @@ class WarmtepompManagerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             except Exception as err:
                 _LOGGER.exception("Dishwasher planning failed")
                 action_status = f"Instellen mislukt: {err}"
+        elif closed_after_open:
+            # Door has just been closed. Even when no automatic action can be
+            # performed, send a compact calculation/result notification once.
+            if plan.get("best_start") is not None:
+                msg = plan.get("message") or f"🍽️ Eco: start {plan.get('best_start').strftime('%H:%M')}"
+            elif not remote_ok:
+                msg = "🍽️ Deur dicht · remote start niet toegestaan"
+            else:
+                msg = plan.get("message") or "🍽️ Deur dicht · planning nog niet beschikbaar"
+            action_status = await self._send_notify(
+                cfg.get(CONF_NOTIFY_DISHWASHER) or cfg.get(CONF_NOTIFY_SERVICE),
+                "Vaatwasser planning",
+                msg,
+            )
+            self._dishwasher_last_notify_key = f"door_closed|{now.isoformat()}|{plan.get('best_block')}"
         elif not remote_ok:
             action_status = "Remote start niet toegestaan"
         elif not automatic:

@@ -40,3 +40,7 @@ set_awning_mode:
             - off
             - advice
             - auto
+
+start_disinfection:
+  name: Start desinfectie
+  description: Zet de ingestelde tapwater-desinfectieschakelaar aan.

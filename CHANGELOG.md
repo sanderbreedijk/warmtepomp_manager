@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.7.0
+
+- Vaatwasser: melding naar mobiel zodra de deur opengaat en de planning wordt gereset.
+- Vaatwasser: melding naar mobiel zodra de deur weer dichtgaat en de planning/berekening klaar is.
+- Vaatwasser: bij gesloten deur wordt Eco 50°C gepland, startvertraging ingesteld en de startknop gebruikt wanneer automatisch plannen mogelijk is.
+- Vaatwasser: als automatisch starten niet mogelijk is, wordt alsnog een compacte berekeningsmelding verstuurd.
+- Nieuwe service `warmtepomp_manager.start_disinfection` toegevoegd; deze zet de ingestelde tapwater-desinfectieschakelaar aan.
+- Dure-stroommelding boven de ingestelde drempel blijft beschikbaar.
+- Python compile-check uitgevoerd.
+
 ## 1.6.0
 
 - Repository opgeschoond: geen root-level duplicaten en geen `__pycache__`/`.pyc` bestanden.

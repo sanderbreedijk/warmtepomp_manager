@@ -5,8 +5,8 @@ from homeassistant.core import HomeAssistant, ServiceCall
 
 from .const import (
     DOMAIN, PLATFORMS, CONF_SWITCH_DATE, DEFAULTS, LEGACY_WRONG_SWITCH_DATES,
-    SERVICE_EXECUTE_ADVICE, SERVICE_SEND_DAILY_REPORT, SERVICE_REFRESH, SERVICE_SET_EXECUTION_MODE, SERVICE_SET_AWNING_MODE,
-    EXECUTION_MODE_AUTO,
+    SERVICE_EXECUTE_ADVICE, SERVICE_SEND_DAILY_REPORT, SERVICE_REFRESH, SERVICE_SET_EXECUTION_MODE, SERVICE_SET_AWNING_MODE, SERVICE_START_DISINFECTION,
+    EXECUTION_MODE_AUTO, CONF_DHW_DISINFECT_SWITCH,
 )
 from .config_flow import normalize_switch_date
 from .coordinator import WarmtepompManagerCoordinator
@@ -65,6 +65,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         mode = str(call.data.get("mode", "")).lower().strip()
         await coordinator.async_set_awning_mode(mode)
 
+    async def start_disinfection_service(call: ServiceCall) -> None:
+        """Start DHW disinfection/legionella cycle via the configured switch."""
+        target = str(coordinator.cfg.get(CONF_DHW_DISINFECT_SWITCH) or "").strip()
+        if target:
+            await hass.services.async_call("switch", "turn_on", {"entity_id": target}, blocking=True)
+        await coordinator.async_request_refresh()
+
     if not hass.services.has_service(DOMAIN, SERVICE_EXECUTE_ADVICE):
         hass.services.async_register(DOMAIN, SERVICE_EXECUTE_ADVICE, execute_advice_service)
     if not hass.services.has_service(DOMAIN, SERVICE_SEND_DAILY_REPORT):
@@ -75,6 +82,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, SERVICE_SET_EXECUTION_MODE, set_execution_mode_service)
     if not hass.services.has_service(DOMAIN, SERVICE_SET_AWNING_MODE):
         hass.services.async_register(DOMAIN, SERVICE_SET_AWNING_MODE, set_awning_mode_service)
+    if not hass.services.has_service(DOMAIN, SERVICE_START_DISINFECTION):
+        hass.services.async_register(DOMAIN, SERVICE_START_DISINFECTION, start_disinfection_service)
     return True
 
 
@@ -89,6 +98,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             hass.services.async_remove(DOMAIN, SERVICE_REFRESH)
             hass.services.async_remove(DOMAIN, SERVICE_SET_EXECUTION_MODE)
             hass.services.async_remove(DOMAIN, SERVICE_SET_AWNING_MODE)
+            hass.services.async_remove(DOMAIN, SERVICE_START_DISINFECTION)
     return unload_ok
 
 

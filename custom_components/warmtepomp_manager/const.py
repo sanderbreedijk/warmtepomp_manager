@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 DOMAIN = "warmtepomp_manager"
-VERSION = "1.6.0"
+VERSION = "1.7.0"
 
 from homeassistant.const import Platform
 
@@ -225,6 +225,7 @@ SERVICE_SEND_DAILY_REPORT = "send_daily_report"
 SERVICE_REFRESH = "refresh"
 SERVICE_SET_EXECUTION_MODE = "set_execution_mode"
 SERVICE_SET_AWNING_MODE = "set_awning_mode"
+SERVICE_START_DISINFECTION = "start_disinfection"
 
 EXECUTION_MODE_ADVICE = "advice"
 EXECUTION_MODE_AUTO = "auto"

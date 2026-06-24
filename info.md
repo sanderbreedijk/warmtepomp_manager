@@ -1,1 +1,1 @@
-Warmtepomp Manager v1.6.0: opgeschoonde energie-, boiler-, vaatwasser- en zonneschermmanager.
+Warmtepomp Manager v1.7.0: met automatische vaatwasserplanning op deur dicht/open, mobiele meldingen en handmatige desinfectieservice.
